@@ -11,7 +11,7 @@ include("includes/clients_sessions.php");
 <body>
     <!-- Header -->
     <?php include("includes/navbar.php");?>
-    <!-- Section: Features -->
+    <!-- Section: Services Information -->
     <section class="section section-features grey lighten-3">
         <div class="container-fluid">
             <h4 class="purple-text text-darken-1 center">Everything You Need To Know</h4>
@@ -122,9 +122,7 @@ include("includes/clients_sessions.php");
             </div>
 
             <!-- Row 2 -->
-            <div class="row">
-
-            </div>
+            <div class="row"></div>
             <div class="center">
                 <a href="signup.php" class="btn btn-large purple">Sign Up</a>
                 <br><br>

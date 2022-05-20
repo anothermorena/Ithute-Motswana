@@ -1,19 +1,18 @@
 <?php
 //Sessions
-include("includes/client_sessions.php");
+include("includes/clients_sessions.php");
 
 //Database Config
 include("config/database.php");
 
 // Import PHPMailer classes into the global namespace
-
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+require 'PHPMailer/src/SMTP.php';
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
-require 'PHPMailer/src/SMTP.php';
 
 ?>
 
@@ -74,10 +73,10 @@ require 'PHPMailer/src/SMTP.php';
               try {
                   //Server settings
                   $mail->isSMTP();                                            // Send using SMTP
-                  $mail->Host       = ' smtp.zoho.com';                        // Set the SMTP server to send through
+                  $mail->Host       = ' smtp.zoho.com';                       // Set the SMTP server to send through
                   $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                  $mail->Username   = 'service@ithutemotswana.com';                     // SMTP username
-                  $mail->Password   = 'Ithutechina123@';                               // SMTP password
+                  $mail->Username   = 'service@ithutemotswana.com';           // SMTP username
+                  $mail->Password   = 'Ithutechina123@';                      // SMTP password
                   $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
                   $mail->Port       = 587;                                    // TCP port to connect to
 
@@ -85,24 +84,18 @@ require 'PHPMailer/src/SMTP.php';
                   $mail->setFrom('service@ithutemotswana.com', 'Ithute Motswana');
                   $mail->addAddress($email);     // Add a recipient
                   $mail->addReplyTo('no-reply@ithutemotswana.com', 'No reply');          
-                
-
 
                   // Content
                   $url = "https://www.ithutemotswana.com/reset_password.php?code=$code";
-                  $mail->isHTML(true);                                  // Set email format to HTML
+                  $mail->isHTML(true);           // Set email format to HTML
                   $mail->Subject = 'Your password reset link';
-                  $mail->Body    = "<h1>You requested a password reset </h1>
-                                  Click <a href='$url'> this link</a>  to do so.   
-                                  ";
+                  $mail->Body    = "<h1>You requested a password reset </h1>Click <a href='$url'> this link</a>  to do so.";
                   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
                   $mail->send();
                   echo "<script> alert('Reset password link have been sent to your email');</script>";
               } catch (Exception $e) {
                   echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
               }
-              exit();
 
             }
             ?>
@@ -115,18 +108,10 @@ require 'PHPMailer/src/SMTP.php';
   <!-- Footer -->
   <?php include("includes/footer.php");?>
 
-  
-  <!--Import jQuery before materialize.js-->
+  <!--Import jQuery, materialize.js and the helper functions-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('.carousel.carousel-slider').carousel({ fullWidth: true });
-      $('.button-collapse').sideNav();
-      $('.modal').modal();
-      $('select').material_select();
-    });
-  </script>
+  <script type="text/javascript" src="js/util.js"></script>
 </body>
 
 </html>
