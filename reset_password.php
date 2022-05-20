@@ -15,7 +15,7 @@ $resetCode = array(
   ":code" =>  $code
   );
 
-//verify if user's password code is not a sham 🤨
+//verify if the user's password reset code is not a sham 🤨
 $query = "SELECT email  FROM reset_passwords WHERE code = :code";
 
 $stmt = $conn->prepare($query);
@@ -44,12 +44,12 @@ if($countEmails == 0){
         <div class="col s12 m3"></div>
         <div class="col s12 m6">
           <div class="card-panel grey lighten-4 grey-text text-darken-4 z-depth-0">
-            <form method="Post" action="reset_password.php?code=<?php echo $code; ?>">
+            <form method="Post" action="reset_password.php?code=<?php echo htmlspecialchars($code); ?>">
              <h5>Create a new password below </h5>
               <div class="input-field">
                 <input type="password" id="password" name="password">
-                <input type="hidden" id="code" name="code" value="<?php echo $code; ?>">
-                <input type="hidden" id="email" name="email" value="<?php echo $email; ?>">
+                <input type="hidden" id="code" name="code" value="<?php echo htmlspecialchars($code); ?>">
+                <input type="hidden" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>">
                 <label for="password">New Password</label>
               </div> 
               <input type="submit" value="Update Password" name="update"  class="btn btn-large purple btn-extend">
@@ -90,7 +90,7 @@ if($countEmails == 0){
                 echo "<script> alert(Password updated,please login);</script>";
                 echo "<script> window.open('login.php','_self')</script>";
             } else {
-                echo "<script> alert(Something went wrong);</script>";
+                echo "<script> alert(Something went wrong. Let us try to reset the password again!);</script>";
                 echo "<script> window.open('forgot.php','_self')</script>";
              }
            }
