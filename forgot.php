@@ -23,71 +23,91 @@ require 'PHPMailer/src/PHPMailer.php';
         <div class="col s12 m3"></div>
         <div class="col s12 m6">
           <div class="card-panel grey lighten-4 grey-text text-darken-4 z-depth-0">
-            <form method="Post" action="forgot.php">
-             <h5>Enter your email below. We will send you a password reset link. </h5>
-              <div class="input-field">
-                <input type="email" id="email" name="email">
-                <label for="email">Email</label>
-              </div> 
-             
-              <input type="submit" value="Reset Password" name="reset" class="btn btn-large purple btn-extend">
-                <p class="center">Or</p>
-               <a href="login.php" class="btn btn-large purple btn-extend grey"><i class="fa fa-sync"></i>  Login</a>
+              <!-- php self can be used for xss -->
+              <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+                <h5>Enter your email below. We will send you a password reset link. </h5>
+                  <div class="input-field">
+                    <input type="email" id="email" name="email" value="<?php echo isset($_POST["email"]) ? htmlspecialchars($_POST["email"]) : "" ?>">
+                    <label for="email">Email</label>
+                  </div> 
+                
+                  <input type="submit" value="Reset Password" name="reset" class="btn btn-large purple btn-extend">
+                    <p class="center">Or</p>
+                  <a href="login.php" class="btn btn-large purple btn-extend grey"><i class="fa fa-sync"></i>  Login</a>
             </form>
             <?php
             
               if(isset($_POST["reset"])){
+                  $email = htmlspecialchars($_POST["email"]);
 
-                  $email = $_POST["email"];
-
-                  //generate random unique code
-                  $code = uniqid(true);
-
-                  $resetData = array(
-                    ":code" =>  htmlspecialchars(strip_tags($code)),
-                    ":email" => htmlspecialchars(strip_tags($email))
+                  $customerEmail = array(
+                    ":email" =>  $email
                     );
-                  //DB insert query
-                  $query = "INSERT INTO reset_passwords(code,email) VALUES (:code,:email)";
-                  
-                  //Sanitize the data
+
+                  $query = "SELECT primary_email FROM customers WHERE primary_email = :email";
+
                   $stmt = $conn->prepare($query);
-                  
-                  //Save all details to the DB
-                  if(!$stmt->execute($resetData)){
-                    exit("Could not generate password reset code");
-                  }
-                  
-                // Instantiation and passing `true` enables exceptions
-                    $mail = new PHPMailer(true);
+                  //Execute query
+                  $stmt->execute($customerEmail); 
+                  //Fetch all corresponding accounts
+                  $countUsers = $stmt->rowCount();
 
-                    try {
-                        //Server settings
-                        $mail->isSMTP();                                            // Send using SMTP
-                        $mail->Host       = ' smtp.zoho.com';                       // Set the SMTP server to send through
-                        $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                        $mail->Username   = 'service@ithutemotswana.com';           // SMTP username
-                        $mail->Password   = 'Ithutechina123@';                      // SMTP password
-                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
-                        $mail->Port       = 587;                                    // TCP port to connect to
 
-                        //Recipients
-                        $mail->setFrom('service@ithutemotswana.com', 'Ithute Motswana');
-                        $mail->addAddress($email);     // Add a recipient
-                        $mail->addReplyTo('no-reply@ithutemotswana.com', 'No reply');          
+                  if($countUsers <= 0){
+                    //user not found Do not tell that to the user incase its a hacker and can keep trying different email accounts
+                    echo "<script> alert('Something went wrong. Please contact customer support to help you with your account problems');</script>";
 
-                        // Content
-                        $url = "https://www.ithutemotswana.com/reset_password.php?code=$code";
-                        $mail->isHTML(true);           // Set email format to HTML
-                        $mail->Subject = 'Your password reset link';
-                        $mail->Body    = "<h1>You requested a password reset </h1>Click <a href='$url'> this link</a>  to do so.";
-                        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-                        $mail->send();
-                        echo "<script> alert('Reset password link have been sent to your email');</script>";
-                    } catch (Exception $e) {
-                        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                  } else {
+                      //account found, proceed with the password reset process.
+
+                      //generate random unique code
+                      $code = uniqid(true);
+
+                      $resetData = array(
+                        ":code" =>  htmlspecialchars(strip_tags($code)),
+                        ":email" => htmlspecialchars(strip_tags($email))
+                        );
+                      //DB insert query
+                      $query = "INSERT INTO reset_passwords(code,email) VALUES (:code,:email)";
+                      
+                      //Sanitize the data
+                      $stmt = $conn->prepare($query);
+                      
+                      //Save all details to the DB
+                      if(!$stmt->execute($resetData)){
+                        exit("Could not generate password reset code");
+                      }
+                    
+                      //Instantiation and passing `true` enables exceptions
+                      $mail = new PHPMailer(true);
+
+                      try {
+                          //Server settings
+                          $mail->isSMTP();                                            // Send using SMTP
+                          $mail->Host       = ' smtp.zoho.com';                       // Set the SMTP server to send through
+                          $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                          $mail->Username   = 'service@ithutemotswana.com';           // SMTP username
+                          $mail->Password   = 'Ithutechina123@';                      // SMTP password
+                          $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+                          $mail->Port       = 587;                                    // TCP port to connect to
+
+                          //Recipients
+                          $mail->setFrom('service@ithutemotswana.com', 'Ithute Motswana');
+                          $mail->addAddress($email);     // Add a recipient
+                          $mail->addReplyTo('no-reply@ithutemotswana.com', 'No reply');          
+
+                          // Content
+                          $url = "https://www.ithutemotswana.com/reset_password.php?code=$code";
+                          $mail->isHTML(true);           // Set email format to HTML
+                          $mail->Subject = 'Your password reset link';
+                          $mail->Body    = "<h1>You requested a password reset </h1>Click <a href='$url'> this link</a>  to do so.";
+                          $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+                          $mail->send();
+                          echo "<script> alert('Reset password link have been sent to your email');</script>";
+                      } catch (Exception $e) {
+                          echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                      }
                     }
-
                   }
                 ?>
           </div>
