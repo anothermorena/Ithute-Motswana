@@ -1,9 +1,7 @@
-<?php
-//Sessions
-include("includes/clients_sessions.php");
-
-//Database Config
-include("config/database.php");
+<!DOCTYPE html>
+<html>
+<!-- Document Head -->
+<?php include "includes/header.php";
 
 // Import PHPMailer classes into the global namespace
 use PHPMailer\PHPMailer\SMTP;
@@ -15,12 +13,6 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 
 ?>
-
-<!DOCTYPE html>
-<html>
-<!-- Document Head -->
-<?php include "includes/header.php";?>
-
 <body>
   <!-- Header -->
    <?php include("includes/navbar.php");?>

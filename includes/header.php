@@ -1,3 +1,15 @@
+<?php
+//Sessions
+session_name("clients");
+session_start();
+//thwarts session fixation attacks
+session_regenerate_id();
+
+//Database Config
+include("config/database.php");
+
+?>
+
 <head>
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

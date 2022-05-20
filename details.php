@@ -1,8 +1,3 @@
-<?php
-//Sessions
-include("includes/clients_sessions.php");
-
-?>
 <!DOCTYPE html>
 <html>
   <!-- Document Head -->

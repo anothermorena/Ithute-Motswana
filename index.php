@@ -1,9 +1,3 @@
-<?php
-session_name("clients");
-session_start();
-session_regenerate_id();
-
-?>
 <!DOCTYPE html>
 <html>
 <!-- Document Head -->
