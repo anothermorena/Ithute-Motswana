@@ -1,36 +1,5 @@
-<?php
-session_name("clients");
-session_start();
-session_regenerate_id();
-
-//redirect user to login page if login session is not set
-if(!isset($_SESSION["customer_session"])){
-    echo "<script> window.open('../login.php','_self')</script>";
-  
-  }
-//Database Config
-include("../config/database.php");
-
-$email = $_SESSION["customer_session"];
-
-
-//get application number counter
-   $get_applications = "SELECT *  FROM applications WHERE email='$email'";
-   // Prepare statement
-   $stmt = $conn->prepare($get_applications);
-   //Execute query
-   $stmt->execute(); 
-   $result = $stmt->fetchAll();
-   $ap_count = $stmt->rowCount();
-
-
-  
-
-?>
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -38,220 +7,93 @@ $email = $_SESSION["customer_session"];
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="../css/materialize.min.css" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="../css/main.css" />
-
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ithute Motswana</title>
-
-    <style>
-    ul.dropdown-content.select-dropdown li:not(.disabled) span {
-        color: #7e57c2;
-    }
-
-    /* label color */
-    .input-field label {
-        color: #7e57c2;
-    }
-
-
-    /* valid color */
-    .input-field input[type=text].valid {
-        border-bottom: 1px solid #7e57c2;
-        box-shadow: 0 1px 0 0 #7e57c2;
-    }
-
-    /* invalid color */
-    .input-field input[type=text].invalid {
-        border-bottom: 1px solid #000;
-        box-shadow: 0 1px 0 0 #000;
-    }
-
-    /* icon prefix focus color */
-    .input-field .prefix.active {
-        color: #7e57c2;
-    }
-
-    input:not([type]):focus:not([readonly]),
-    input[type="text"]:not(.browser-default):focus:not([readonly]),
-    input[type="password"]:not(.browser-default):focus:not([readonly]),
-    input[type="email"]:not(.browser-default):focus:not([readonly]),
-    input[type="url"]:not(.browser-default):focus:not([readonly]),
-    input[type="time"]:not(.browser-default):focus:not([readonly]),
-    input[type="date"]:not(.browser-default):focus:not([readonly]),
-    input[type="datetime"]:not(.browser-default):focus:not([readonly]),
-    input[type="datetime-local"]:not(.browser-default):focus:not([readonly]),
-    input[type="tel"]:not(.browser-default):focus:not([readonly]),
-    input[type="number"]:not(.browser-default):focus:not([readonly]),
-    input[type="search"]:not(.browser-default):focus:not([readonly]),
-    textarea.materialize-textarea:focus:not([readonly]) {
-        border-bottom: 1px solid #7e57c2;
-        -webkit-box-shadow: 0 1px 0 0 #7e57c2;
-        box-shadow: 0 1px 0 0 #7e57c2;
-    }
-    input[name="from1"].invalid~label:after {
-      content: attr(data-error);
-      color: #F44336;
-      opacity: 1;
-    }
-    input[name="from1"]:focus~label:after,
-    input[name="from1"]~label:after {
-      display: block;
-      content: "";
-      position: absolute;
-      top: 36px;
-      opacity: 0;
-      white-space: pre;
-      transition: .2s opacity ease-out, .2s color ease-out;
-    }
-    input[name="to1"].invalid~label:after {
-      content: attr(data-error);
-      color: #F44336;
-      opacity: 1;
-    }
-    input[name="to1"]:focus~label:after,
-    input[name="to1"]~label:after {
-      display: block;
-      content: "";
-      position: absolute;
-      top: 36px;
-      opacity: 0;
-      white-space: pre;
-      transition: .2s opacity ease-out, .2s color ease-out;
-    }
-    input[name="workfrom"].invalid~label:after {
-      content: attr(data-error);
-      color: #F44336;
-      opacity: 1;
-    }
-    input[name="workfrom"]:focus~label:after,
-    input[name="workfrom"]~label:after {
-      display: block;
-      content: "";
-      position: absolute;
-      top: 36px;
-      opacity: 0;
-      white-space: pre;
-      transition: .2s opacity ease-out, .2s color ease-out;
-    }
-    input[name="workto"].invalid~label:after {
-      content: attr(data-error);
-      color: #F44336;
-      opacity: 1;
-    }
-    input[name="workto"]:focus~label:after,
-    input[name="workto"]~label:after {
-      display: block;
-      content: "";
-      position: absolute;
-      top: 36px;
-      opacity: 0;
-      white-space: pre;
-      transition: .2s opacity ease-out, .2s color ease-out;
-    }
-    </style>
 </head>
 
 <body>
 
-    <!-- Navbar -->
-    <?php include("navbar.php");?>
+<!-- Navbar -->
+<?php include("navbar.php");
+    
+$email = $_SESSION["customer_session"];
 
-    <!-- Page Container -->
-    <div class="container-fluid">
-        <!-- Page Row -->
+//get application number counter
+$getApplications = "SELECT *  FROM applications WHERE email='$email'";
+// Prepare statement
+$stmt = $conn->prepare($getApplications);
+//Execute query
+$stmt->execute(); 
+$result = $stmt->fetchAll();
+$applicationCount = $stmt->rowCount();
+   
+?>
+
+    <div class="container-fluid" style="margin-bottom: 315px; margin-top18;">
         <div class="row" style="position:relative;top:100px;">
-
-            <div class="col s12 m3">
-                <?php include("includes/sidebar.php") ?>
-            </div>
-            <!-- Page Column -->
-
-            <!-- Different Page Display -->
+            <div class="col s12 m3"> <?php include("includes/sidebar.php") ?></div>
             <div class="col s12 m8">
                 <?php 
-            if(!isset($_GET["new_application"]) && !isset($_GET["personal_info"]) 
-            && !isset($_GET["our_contacts"]) && !isset($_GET["bank_details"]) && !isset($_GET["language"]) 
-            && !isset($_GET["edu_n_history"]) && !isset($_GET["my_applications"]) && !isset($_GET["documents"])
-            ){
-              include("my_applications.php");     
-            }
-              //user clicks on new application
-              if (isset($_GET["new_application"])){
+                    if(!isset($_GET["new_application"]) && !isset($_GET["personal_info"]) 
+                    && !isset($_GET["our_contacts"]) && !isset($_GET["bank_details"]) && !isset($_GET["language"]) 
+                    && !isset($_GET["edu_n_history"]) && !isset($_GET["my_applications"]) && !isset($_GET["documents"])
+                    ){
+                      include("my_applications.php");     
+                    }
+                      //user clicks on new application
+                      if (isset($_GET["new_application"])){
 
-                include("new_application.php");     
-              } 
-              
-              //user clicks on my application
-              if (isset($_GET["my_applications"])){
+                        include("new_application.php");     
+                      } 
+                      
+                      //user clicks on my application
+                      if (isset($_GET["my_applications"])){
 
-                include("my_applications.php");     
-              } 
-              //user clicks on personal info
-              if (isset($_GET["personal_info"])){
+                        include("my_applications.php");     
+                      } 
+                      //user clicks on personal info
+                      if (isset($_GET["personal_info"])){
 
-                include("personal_info.php");     
-              } 
-               
-              
-              //user clicks on our contacts
-              if (isset($_GET["our_contacts"])){
+                        include("personal_info.php");     
+                      } 
+                      
+                      
+                      //user clicks on our contacts
+                      if (isset($_GET["our_contacts"])){
 
-                include("contacts.php");     
-              } 
-              //user clicks on banking details
-              if (isset($_GET["bank_details"])){
+                        include("contacts.php");     
+                      } 
+                      //user clicks on banking details
+                      if (isset($_GET["bank_details"])){
 
-                include("bank_details.php");     
-              } 
+                        include("bank_details.php");     
+                      } 
 
-              //user clicks on language Proficiency
-              if (isset($_GET["language"])){
+                      //user clicks on language Proficiency
+                      if (isset($_GET["language"])){
 
-                include("language.php");     
-              } 
-              //user clicks on supporting documents
-              if (isset($_GET["documents"])){
+                        include("language.php");     
+                      } 
+                      //user clicks on supporting documents
+                      if (isset($_GET["documents"])){
 
-                include("documents.php");     
-              } 
-              
-            
-            ?>
-
+                        include("documents.php");     
+                      } 
+                ?>
             </div>
-            <!-- /. Different Page Display -->
-
-
-
-
-            <!-- ./ Page Column -->
-
         </div>
-        <!-- ./ Page Row -->
-
     </div>
-    <!-- ./ Page Container -->
 
+  <!-- Footer -->
+  <?php include("../includes/footer.php");?>
 
-
-
-
-
-
-    <!-- Footer -->
-    <?php include("footer.php");?>
-
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="../js/materialize.min.js"></script>
+   <!--Import jQuery, materialize.js and the helper functions-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../js/materialize.min.js"></script>
+  <script type="text/javascript" src="../js/util.js"></script>
     <script>
     $(document).ready(function() {
-
-         //side nav init
-         $('.button-collapse').sideNav();
-
-        $('select').material_select();
-
         //Date Picker
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
@@ -270,15 +112,9 @@ $email = $_SESSION["customer_session"];
 
         //major search and filtering
         $("#major_search").keyup(function() {
-
-           
-
-
             var discipline = $('select#discipline').val();
             var major = $(this).val();
-
             if (major != "") {
-
                 $.ajax({
                     url: "search_results.php",
                     method: "POST",
@@ -295,11 +131,7 @@ $email = $_SESSION["customer_session"];
                 $(document).on('click', '.li', function() {
                     $("#major_search").val($(this).text());
                     $("#major_list").fadeOut();
-
-
                 });
-
-
             } else {
                 $("#major_list").fadeOut();
             }
@@ -353,13 +185,8 @@ $email = $_SESSION["customer_session"];
         $('#workto').change(function() {
           checkDate();
         });
-
-
-      
-
-
-
     });
+
     </script>
 </body>
 

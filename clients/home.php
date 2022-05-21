@@ -1,18 +1,3 @@
-<?php
-session_name("clients");
-session_start();
-session_regenerate_id();
-
-//redirect user to login page if login session is not set
-if(!isset($_SESSION["customer_session"])){
-    echo "<script> window.open('../login.php','_self')</script>";
-  
-  }
-//Database Config
-include("../config/database.php");
-
-?>
-
 <!DOCTYPE html>
 <html>
 

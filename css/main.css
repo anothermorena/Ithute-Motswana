@@ -125,3 +125,108 @@ border-bottom: 1px solid #7e57c2;
 -webkit-box-shadow: 0 1px 0 0 #7e57c2;
 box-shadow: 0 1px 0 0 #7e57c2;
 }
+
+ul.dropdown-content.select-dropdown li:not(.disabled) span {
+  color: #7e57c2;
+}
+
+/* label color */
+.input-field label {
+  color: #7e57c2;
+}
+
+
+/* valid color */
+.input-field input[type=text].valid {
+  border-bottom: 1px solid #7e57c2;
+  box-shadow: 0 1px 0 0 #7e57c2;
+}
+
+/* invalid color */
+.input-field input[type=text].invalid {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: #7e57c2;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type="text"]:not(.browser-default):focus:not([readonly]),
+input[type="password"]:not(.browser-default):focus:not([readonly]),
+input[type="email"]:not(.browser-default):focus:not([readonly]),
+input[type="url"]:not(.browser-default):focus:not([readonly]),
+input[type="time"]:not(.browser-default):focus:not([readonly]),
+input[type="date"]:not(.browser-default):focus:not([readonly]),
+input[type="datetime"]:not(.browser-default):focus:not([readonly]),
+input[type="datetime-local"]:not(.browser-default):focus:not([readonly]),
+input[type="tel"]:not(.browser-default):focus:not([readonly]),
+input[type="number"]:not(.browser-default):focus:not([readonly]),
+input[type="search"]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #7e57c2;
+  -webkit-box-shadow: 0 1px 0 0 #7e57c2;
+  box-shadow: 0 1px 0 0 #7e57c2;
+}
+input[name="from1"].invalid~label:after {
+content: attr(data-error);
+color: #F44336;
+opacity: 1;
+}
+input[name="from1"]:focus~label:after,
+input[name="from1"]~label:after {
+display: block;
+content: "";
+position: absolute;
+top: 36px;
+opacity: 0;
+white-space: pre;
+transition: .2s opacity ease-out, .2s color ease-out;
+}
+input[name="to1"].invalid~label:after {
+content: attr(data-error);
+color: #F44336;
+opacity: 1;
+}
+input[name="to1"]:focus~label:after,
+input[name="to1"]~label:after {
+display: block;
+content: "";
+position: absolute;
+top: 36px;
+opacity: 0;
+white-space: pre;
+transition: .2s opacity ease-out, .2s color ease-out;
+}
+input[name="workfrom"].invalid~label:after {
+content: attr(data-error);
+color: #F44336;
+opacity: 1;
+}
+input[name="workfrom"]:focus~label:after,
+input[name="workfrom"]~label:after {
+display: block;
+content: "";
+position: absolute;
+top: 36px;
+opacity: 0;
+white-space: pre;
+transition: .2s opacity ease-out, .2s color ease-out;
+}
+input[name="workto"].invalid~label:after {
+content: attr(data-error);
+color: #F44336;
+opacity: 1;
+}
+input[name="workto"]:focus~label:after,
+input[name="workto"]~label:after {
+display: block;
+content: "";
+position: absolute;
+top: 36px;
+opacity: 0;
+white-space: pre;
+transition: .2s opacity ease-out, .2s color ease-out;
+}
