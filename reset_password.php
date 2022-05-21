@@ -27,7 +27,7 @@ if($countEmails == 0){
     echo "<script> alert('Cant find the requested page');</script>";
     exit();
 } else {
-  //users code is valid, get thier email and use it for resetting their password
+  //users code is valid, get their email and use it for resetting their password
   $rowEmail = $stmt->fetch(PDO::FETCH_ASSOC);
   $email = $rowEmail["email"];
 }
