@@ -5,12 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- font awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link type="text/css" rel="stylesheet" href="../css/materialize.min.css" media="screen,projection" />
     <title>Ithute Motswana</title>
+    <style>
+        .btn {
+            text-transform: none;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -113,9 +117,9 @@
 <?php include("../includes/footer.php");?>
 
 <!--Import jQuery, materialize.js and the helper functions-->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="../js/materialize.min.js"></script>
-  <script type="text/javascript" src="../js/util.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../js/materialize.min.js"></script>
+<script type="text/javascript" src="../js/util.js"></script>
 
 </body>
 </html>
