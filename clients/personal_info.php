@@ -1,152 +1,139 @@
 <?php
-
-$email = $_SESSION["customer_session"];
+$customerEmail = array(
+  ":email" =>  $_SESSION["customer_session"]
+  );
 
 //Get customer personal information
-$query = "SELECT *  FROM personal_info WHERE email = '$email'";
+$query = "SELECT *  FROM personal_info WHERE email = :email";
 $stmt = $conn->prepare($query);
 //Execute query
-$stmt->execute(); 
+$stmt->execute($customerEmail); 
 //Return results as an array 
-$row_customer = $stmt->fetch(PDO::FETCH_ASSOC);
+$row_customer_personal_info = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$id = $row_customer["id"];
-$firstname = $row_customer["firstname"];
-$middlename = $row_customer["middlename"];
-$lastname = $row_customer["lastname"];
-$chinesename = $row_customer["chinese_name"];
-$dob = $row_customer["dob"];
-$gender = $row_customer["gender"];
-$marital_status = $row_customer["marital_status"];
-$country = $row_customer["country_of_birth"];
-$city = $row_customer["city_of_birth"];
-$religion = $row_customer["religion"];
-$nationality = $row_customer["nationality"];
-$native_language = $row_customer["native_language"];
-$passport_no = $row_customer["passport_no"];
-$passport_exp = $row_customer["date_of_expiration"];
-$fax = $row_customer["fax"];
-$postal = $row_customer["postal_address"];
-
-
-
-
+$id = $row_customer_personal_info["id"];
+$firstname = $row_customer_personal_info["firstname"];
+$middlename = $row_customer_personal_info["middlename"];
+$lastname = $row_customer_personal_info["lastname"];
+$chinesename = $row_customer_personal_info["chinese_name"];
+$dob = $row_customer_personal_info["dob"];
+$gender = $row_customer_personal_info["gender"];
+$marital_status = $row_customer_personal_info["marital_status"];
+$country = $row_customer_personal_info["country_of_birth"];
+$city = $row_customer_personal_info["city_of_birth"];
+$religion = $row_customer_personal_info["religion"];
+$nationality = $row_customer_personal_info["nationality"];
+$native_language = $row_customer_personal_info["native_language"];
+$passport_no = $row_customer_personal_info["passport_no"];
+$passport_exp = $row_customer_personal_info["date_of_expiration"];
+$fax = $row_customer_personal_info["fax"];
+$postal = $row_customer_personal_info["postal_address"];
 ?>
-
 <center>
-    <h5>Personal Information</h5>
-    <p>Please input your personal information below</p>
-  
-
+  <h5>Personal Information</h5>
+  <p>Please input your personal information below</p>
   <form method="POST" action="">
-
       <div class="row">
-
         <div class="input-field col s12 m4">
-          <input id="firstname" type="text" class="validate" name="firstname" value="<?php echo $firstname;?>" required>
+          <input id="firstname" type="text" class="validate" name="firstname" value="<?php echo htmlspecialchars($firstname);?>" required>
           <label for="firstname">First Name</label>
         </div>
 
-
         <div class="input-field col s12 m4">
-          <input id="middlename" type="text" class="validate" name="middlename" value="<?php echo $middlename;?>" required>
+          <input id="middlename" type="text" class="validate" name="middlename" value="<?php echo htmlspecialchars($middlename);?>" required>
           <label for="middlename">Middle Name</label>
         </div>
 
-
         <div class="input-field col s12 m4">
-          <input id="lastname" type="text" class="validate" name="lastname" value="<?php echo $lastname;?>" required>
+          <input id="lastname" type="text" class="validate" name="lastname" value="<?php echo htmlspecialchars($lastname);?>" required>
           <label for="lastname">Last Name</label>
         </div>
 
         <div class="input-field col s12 m4">
-          <input id="chinesename" type="text" class="validate" name="chinesename" value="<?php echo $chinesename;?>">
+          <input id="chinesename" type="text" class="validate" name="chinesename" value="<?php echo htmlspecialchars($chinesename);?>">
           <label for="chinesename">Chinese Name</label>
         </div>
 
         <div class="input-field col s12 m4">
-          <input id="dob" type="text" class="datepicker" name="dob" value="<?php echo $dob;?>" required>
+          <input id="dob" type="text" class="datepicker" name="dob" value="<?php echo htmlspecialchars($dob);?>" required>
           <label for="dob">Date Of Birth</label>
         </div>
 
          <div class="input-field col s12 m4">
             <select name="gender" required>
-                <option value="<?php echo $gender;?>"><?php echo $gender;?></option>
+                <option value="<?php echo $gender;?>"><?php echo htmlspecialchars($gender);?></option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-                <option value="Other">Other :)</option>
-                    
+                <option value="Other">Other :)</option>      
             </select>
             <label>Gender</label>
         </div>
+
          <div class="input-field col s12 m4">
             <select name="marital_status" required>
-                <option value="<?php echo $marital_status;?>"><?php echo $marital_status;?></option>
+                <option value="<?php echo $marital_status;?>"><?php echo htmlspecialchars($marital_status);?></option>
                 <option value="Single">Single</option>
                 <option value="In a Relationship">In a Relationship</option>
                 <option value="Married">Married</option>
                 <option value="Divorced">Divorced</option>
-                <option value="widow">Widow</option>
-                    
+                <option value="widow">Widow</option>     
             </select>
             <label>Marital Status</label>
         </div>
 
        <div class="input-field col s12 m4">
-          <input id="country" type="text" class="validate" name="country" value="<?php echo $country;?>" required>
+          <input id="country" type="text" class="validate" name="country" value="<?php echo htmlspecialchars($country);?>" required>
           <label for="country">Country Of Birth</label>
         </div>
 
-          <div class="input-field col s12 m4">
-          <input id="city" type="text" class="validate" name="city" value="<?php echo $city;?>" required>
+        <div class="input-field col s12 m4">
+          <input id="city" type="text" class="validate" name="city" value="<?php echo htmlspecialchars($city);?>" required>
           <label for="city">City Of Birth</label>
         </div>
 
-          <div class="input-field col s12 m4">
-          <input id="religion" type="text" class="validate" name="religion" value="<?php echo $religion;?>" required>
+        <div class="input-field col s12 m4">
+          <input id="religion" type="text" class="validate" name="religion" value="<?php echo htmlspecialchars($religion);?>" required>
           <label for="religion">Religion</label>
         </div>
 
-         <div class="input-field col s12 m4">
-          <input id="nationality" type="text" class="validate" name="nationality" value="<?php echo $nationality;?>" required>
+        <div class="input-field col s12 m4">
+          <input id="nationality" type="text" class="validate" name="nationality" value="<?php echo htmlspecialchars($nationality);?>" required>
           <label for="nationality">Nationality</label>
         </div>
 
-         <div class="input-field col s12 m4">
-          <input id="language" type="text" class="validate" name="language" value="<?php echo $native_language;?>" required>
+        <div class="input-field col s12 m4">
+          <input id="language" type="text" class="validate" name="language" value="<?php echo htmlspecialchars($native_language);?>" required>
           <label for="language">Native Lanaguage</label>
         </div>
 
-         <div class="input-field col s12 m4">
-          <input id="passport" type="text" class="validate" name="passport" value="<?php echo $passport_no;?>" required>
+        <div class="input-field col s12 m4">
+          <input id="passport" type="text" class="validate" name="passport" value="<?php echo htmlspecialchars($passport_no);?>" required>
           <label for="passport">Passport No</label>
         </div>
 
-         <div class="input-field col s12 m4">
-          <input id="pass_expiry_date" type="text" class="datepicker" name="pass_expiry_date" value="<?php echo $passport_exp;?>" required>
+        <div class="input-field col s12 m4">
+          <input id="pass_expiry_date" type="text" class="datepicker" name="pass_expiry_date" value="<?php echo htmlspecialchars($passport_exp);?>" required>
           <label for="pass_expiry_date">Date Of Expiry</label>
         </div>
 
-         <div class="input-field col s12 m4">
-          <input id="fax" type="text" class="validate" name="fax" value="<?php echo $fax;?>" required>
+        <div class="input-field col s12 m4">
+          <input id="fax" type="text" class="validate" name="fax" value="<?php echo htmlspecialchars($fax);?>" required>
           <label for="fax">Fax</label>
         </div>
 
         <div class="input-field col s12 m4">
-          <input id="postal" type="text" class="validate" name="postal" value="<?php echo $postal;?>" required>
+          <input id="postal" type="text" class="validate" name="postal" value="<?php echo htmlspecialchars($postal);?>" required>
           <label for="postal">Postal Address</label>
         </div>
 
-          <div class="input-field col s12 m4">
+        <div class="input-field col s12 m4">
            <button class="btn waves-effect waves-light deep-purple lighten-1" type="submit" name="update">Save Changes
             <i class="material-icons right">check</i>
             </button>
         </div>
-
-    
       </div>
-
     </form>
+
     <?php
     if(isset($_POST["update"])){
 
@@ -169,7 +156,7 @@ $postal = $row_customer["postal_address"];
       $fax = $_POST["fax"];
       $postal = $_POST["postal"];
 
-       //Update customer account details
+       //Update customer personal information
         $query = "UPDATE personal_info SET 
         firstname = :firstname,
         middlename = :middlename,
@@ -210,20 +197,13 @@ $postal = $row_customer["postal_address"];
           ":postal" =>  htmlspecialchars(strip_tags(ucfirst(strtolower($postal)))),
           ":update_id" =>  htmlspecialchars(strip_tags($id))
          );
-
-        //Sanitize the data
         $stmt = $conn->prepare($query);
-
-        //Save all details to the DB
+        //Update the DB
         if($stmt->execute($updateData)){
-
           echo "<script>alert('Your personal information have been updated successfully'); </script>";
           echo "<script>window.open('apply.php?personal_info','_self')</script>";
         }
-
-    }
-
-
+      }  
+    
     ?>
-
 </center>
