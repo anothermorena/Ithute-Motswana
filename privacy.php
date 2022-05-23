@@ -6,7 +6,7 @@
 <body>
   <!-- Header -->
    <?php include "includes/navbar.php";?>
-  <!-- Section: Signup -->
+
   <section class="section section-signup">
     <div class="container">
       <div class="row">
