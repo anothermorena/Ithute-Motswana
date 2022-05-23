@@ -1,5 +1,4 @@
 <center>
-
     <form action="" method="POST">
         <div class="input-field col s12 m2">
             <select name="level" required>
@@ -10,7 +9,6 @@
             </select>
             <label>Select Level</label>
         </div>
-
 
         <div class="input-field col s12 m3">
             <select id="discipline" name="discipline" required>
@@ -31,23 +29,22 @@
             <label>Select Discipline</label>
         </div>
 
-
         <div class="input-field col s12 m6">
             <input type="text" id="major_search" name="major">
             <label for="major_search">Select Major</label>
             <div id="major_list"></div>
         </div>
 
-
         <div class="input-field col s12 m1">
-            <button class="btn btn-small deep-purple ligthen-1" type="submit" name="create_application">Apply</button>
+            <button class="btn btn-small deep-purple lighten-1" type="submit" name="create_application">Apply</button>
         </div>
     </form>
 
-    <?php
+<?php
 if(isset($_POST["create_application"])){
+
   $email = $_SESSION["customer_session"];
-  //capture submitted data
+  //capture application submitted data
   $level = $_POST["level"];
   $discipline = $_POST["discipline"];
   $major = $_POST["major"];
@@ -72,13 +69,9 @@ if(isset($_POST["create_application"])){
 $query = "INSERT INTO applications(level,discipline,major,email,phone,date,invoice_no,payment,status)
 VALUES (:level,:discipline,:major,:email,:phone,:date,:invoice_no,:payment,:status)";
 
-//Sanitize the data
 $stmt = $conn->prepare($query);
-
 //Save all details to the DB
-
   if($stmt->execute($applicationData)){
-
      //Update applied status
      $query = "UPDATE customers SET 
      applied = :applied
@@ -88,19 +81,12 @@ $stmt = $conn->prepare($query);
       ":applied" =>  "applied",
        ":email" =>  htmlspecialchars(strip_tags($email))
       );
-
-     //Sanitize the data
      $stmt = $conn->prepare($query);
-
-     //Save all details to the DB
+     //update the DB
      $stmt->execute($updateData);
-
           echo "<script>alert('Your application have been created successfully'); </script>";
           echo "<script>window.open('apply.php?my_applications','_self')</script>";
     }
-
-}
-
+  }
 ?>
-
 </center>
