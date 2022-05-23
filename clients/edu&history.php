@@ -2,7 +2,7 @@
 
 $email = $_SESSION["customer_session"];
 
-//Get customer personal information
+//Get customer acamedic history information
 $query = "SELECT *  FROM history WHERE email = '$email'";
 $stmt = $conn->prepare($query);
 //Execute query
@@ -33,113 +33,95 @@ $workfrom = $row_customer["workfrom"];
 $workto = $row_customer["workto"];
 
 
-
-
-
 ?>
 
 <center>
     <h5>Education & Employment History</h5>
     <p>Please input your education and employment information below</p>
 
-
-    <form method="POST" action="">
-
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
         <div class="row">
-
             <!-- Education Background -->
             <div class="row">
                 <h6>Education History</h6>
                 <div class="input-field col s12 m4">
-                    <input id="institutename1" type="text" class="validate" name="institute1"
-                        value="<?php echo $institute1;?>" required>
+                    <input id="institutename1" type="text" class="validate" name="institute1" value="<?php echo htmlspecialchars($institute1);?>" required>
                     <label for="institutename1">Institute Name</label>
                 </div>
 
-
                 <div class="input-field col s12 m4">
-                    <input id="fieldofstudy1" type="text" class="validate" name="field1" value="<?php echo $field1;?>"
-                        required>
+                    <input id="fieldofstudy1" type="text" class="validate" name="field1" value="<?php echo htmlspecialchars($field1);?>" required>
                     <label for="fieldofstudy1">Field Of Study</label>
                 </div>
 
-
                 <div class="input-field col s12 m4">
-                    <input id="qualification1" type="text" class="validate" name="qualification1"
-                        value="<?php echo $qualification1;?>" required>
+                    <input id="qualification1" type="text" class="validate" name="qualification1" value="<?php echo htmlspecialchars($qualification1);?>" required>
                     <label for="qualification1">Qualification (e.g BA,BSc)</label>
                 </div>
 
                 <div class="input-field col s12 m4">
-                    <input id="from1" type="text" class="datepicker" name="from1" value="<?php echo $from1;?>" required>
+                    <input id="from1" type="text" class="datepicker" name="from1" value="<?php echo htmlspecialchars($from1);?>" required>
                     <label for="from1" data-error="fill in date" data-success="right">From</label>
                 </div>
 
-
                 <div class="input-field col s12 m4">
-                    <input id="to1" type="text" class="datepicker" name="to1" value="<?php echo $to1;?>" required>
+                    <input id="to1" type="text" class="datepicker" name="to1" value="<?php echo htmlspecialchars($to1);?>" required>
                     <label for="to1" data-error="fill in date" data-success="right">To</label>
                 </div>
             </div>
 
             <div class="row">
                 <div class="input-field col s12 m4">
-                    <input id="institutename2" type="text" class="validate" name="institute2"
-                        value="<?php echo $institute2;?>">
+                    <input id="institutename2" type="text" class="validate" name="institute2" value="<?php echo htmlspecialchars($institute2);?>">
                     <label for="institutename2">Institute Name</label>
                 </div>
 
-
                 <div class="input-field col s12 m4">
-                    <input id="fieldofstudy2" type="text" class="validate" name="field2" value="<?php echo $field2;?>">
+                    <input id="fieldofstudy2" type="text" class="validate" name="field2" value="<?php echo htmlspecialchars($field2);?>">
                     <label for="fieldofstudy2">Field Of Study</label>
                 </div>
 
-
                 <div class="input-field col s12 m4">
-                    <input id="qualification2" type="text" class="validate" name="qualification2"
-                        value="<?php echo $qualification2;?>">
+                    <input id="qualification2" type="text" class="validate" name="qualification2" value="<?php echo htmlspecialchars($qualification2);?>">
                     <label for="qualification2">Qualification (e.g BA,BSc)</label>
                 </div>
 
                 <div class="input-field col s12 m4">
-                    <input id="from2" type="text" class="datepicker" name="from2" value="<?php echo $from2;?>">
+                    <input id="from2" type="text" class="datepicker" name="from2" value="<?php echo htmlspecialchars($from2);?>">
                     <label for="from2">From</label>
                 </div>
 
                 <div class="input-field col s12 m4">
-                    <input id="to2" type="text" class="datepicker" name="to2" value="<?php echo $to2;?>">
+                    <input id="to2" type="text" class="datepicker" name="to2" value="<?php echo htmlspecialchars($to2);?>">
                     <label for="to2">To</label>
                 </div>
             </div>
 
             <div class="row">
                 <div class="input-field col s12 m4">
-                    <input id="institutename3" type="text" class="validate" name="institute3"
-                        value="<?php echo $institute3;?>">
+                    <input id="institutename3" type="text" class="validate" name="institute3" value="<?php echo htmlspecialchars($institute3);?>">
                     <label for="institutename3">Institute Name</label>
                 </div>
 
 
                 <div class="input-field col s12 m4">
-                    <input id="fieldofstudy3" type="text" class="validate" name="field3" value="<?php echo $field3;?>">
+                    <input id="fieldofstudy3" type="text" class="validate" name="field3" value="<?php echo htmlspecialchars($field3);?>">
                     <label for="fieldofstudy3">Field Of Study</label>
                 </div>
 
 
                 <div class="input-field col s12 m4">
-                    <input id="qualification3" type="text" class="validate" name="qualification3"
-                        value="<?php echo $qualification3;?>">
+                    <input id="qualification3" type="text" class="validate" name="qualification3" value="<?php echo htmlspecialchars($qualification3);?>">
                     <label for="qualification3">Qualification (e.g BA,BSc)</label>
                 </div>
 
                 <div class="input-field col s12 m4">
-                    <input id="from3" type="text" class="datepicker" name="from3" value="<?php echo $from3;?>">
+                    <input id="from3" type="text" class="datepicker" name="from3" value="<?php echo htmlspecialchars($from3);?>">
                     <label for="from3">From</label>
                 </div>
 
                 <div class="input-field col s12 m4">
-                    <input id="to3" type="text" class="datepicker" name="to3" value="<?php echo $to3;?>">
+                    <input id="to3" type="text" class="datepicker" name="to3" value="<?php echo htmlspecialchars($to3);?>">
                     <label for="to3">To</label>
                 </div>
             </div>
@@ -147,54 +129,40 @@ $workto = $row_customer["workto"];
             <!-- /. Education Background -->
 
             <!-- Employment Background -->
-
             <div class="row">
                 <h6>Employment History</h6>
                 <div class="input-field col s12 m4">
-                    <input id="employer" type="text" class="validate" name="employer" value="<?php echo $employer;?>"
-                        required>
+                    <input id="employer" type="text" class="validate" name="employer" value="<?php echo htmlspecialchars($employer);?>" required>
                     <label for="employer">Employer</label>
                 </div>
 
-
                 <div class="input-field col s12 m4">
-                    <input id="work1" type="text" class="validate" name="work" value="<?php echo $work;?>" required>
+                    <input id="work1" type="text" class="validate" name="work" value="<?php echo htmlspecialchars($work);?>" required>
                     <label for="work">Work Engaged</label>
                 </div>
 
-
                 <div class="input-field col s12 m4">
-                    <input id="position" type="text" class="validate" name="position" value="<?php echo $position;?>"
-                        required>
+                    <input id="position" type="text" class="validate" name="position" value="<?php echo htmlspecialchars($position);?>" required>
                     <label for="position">Title & Position </label>
                 </div>
 
                 <div class="input-field col s12 m4">
-                    <input id="workfrom" type="text" class="datepicker" name="workfrom" value="<?php echo $workfrom;?>">
+                    <input id="workfrom" type="text" class="datepicker" name="workfrom" value="<?php echo htmlspecialchars($workfrom);?>">
                     <label for="workfrom" data-error="fill in date" data-success="right">From</label>
                 </div>
 
                 <div class="input-field col s12 m4">
-                    <input id="workto" type="text" class="datepicker" name="workto" value="<?php echo $workto;?>"
-                        required>
+                    <input id="workto" type="text" class="datepicker" name="workto" value="<?php echo htmlspecialchars($workto);?>" required>
                     <label for="workto" data-error="fill in date" data-success="right">To</label>
                 </div>
 
-
                 <div class="input-field col s12 m4">
-                    <button class="btn waves-effect waves-light deep-purple lighten-1" type="submit" name="update">Save
-                        Changes
+                    <button class="btn waves-effect waves-light deep-purple lighten-1" type="submit" name="update">Save Changes
                         <i class="material-icons right">check</i>
                     </button>
                 </div>
-
-
             </div>
-
-
-
         </div>
-
     </form>
     <?php
     if(isset($_POST["update"])){
@@ -221,7 +189,7 @@ $workto = $row_customer["workto"];
      $workfrom = $_POST["workfrom"];
      $workto = $_POST["workto"];
 
-       //Update customer account details
+       //Update customer education and employment history details
         $query = "UPDATE history SET 
         institute1 = :institute1,
         field1 = :field1,
@@ -269,19 +237,14 @@ $workto = $row_customer["workto"];
           ":update_id" =>  htmlspecialchars(strip_tags($id))
          );
 
-        //Sanitize the data
         $stmt = $conn->prepare($query);
-
-        //Save all details to the DB
+        //Update the DB
         if($stmt->execute($updateData)){
 
           echo "<script>alert('Your education and employment information have been updated successfully'); </script>";
           echo "<script>window.open('apply.php?edu_n_history','_self')</script>";
         }
-
     }
 
-
     ?>
-
 </center>
