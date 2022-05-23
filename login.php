@@ -84,7 +84,7 @@ if(isset($_SESSION["customer_session"])){
   </section>
 
   <!-- Footer -->
-    <?php include("includes/footer.php");?> 
+  <?php include("includes/footer.php");?> 
 
   <!--Import jQuery, materialize.js and the helper functions-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

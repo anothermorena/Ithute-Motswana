@@ -32,7 +32,6 @@ $position = $row_customer["position"];
 $workfrom = $row_customer["workfrom"];
 $workto = $row_customer["workto"];
 
-
 ?>
 
 <center>
