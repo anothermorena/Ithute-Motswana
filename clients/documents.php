@@ -1,18 +1,11 @@
 <?php
-
-
 $email = $_SESSION["customer_session"];
 
-
-//Get customer personal information
+//Get customer's uploaded documents
 $query = "SELECT *  FROM documents WHERE email = '$email'";
 $stmt = $conn->prepare($query);
-//Execute query
 $stmt->execute(); 
-//Return results as an array 
 $row_customer = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
 
 $id = $row_customer["id"];
 $email = $row_customer["email"];
@@ -33,239 +26,221 @@ $cv = $row_customer["cv"];
 <center>
     <h5>Required Supporting Documents</h5>
     <p>For documents which are in more than one document please combine / merge them into a single PDF file</p>
-  
-
-  <form method="POST" action="" enctype="multipart/form-data">
-
-
-      <div class="row">
-      <!-- Supporting Documents -->
+    <form method="POST" action="" enctype="multipart/form-data">
         <div class="row">
-            <?php if(!empty($photo)) {?>
-               <div class="col s8" >
-                    <p> Passport / Visa Style Photo: <a href="uploads/documents/<?php echo $photo; ?>" target="_blank"> <?php echo $photo;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red" type="submit" name="delete_photo"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-               
-            <?php } else {?>
-                <div class="file-field input-field col s12">
-                    <div class="btn deep-purple lighten-1">
-                        <span>Passport / Visa Style Photo</span>
-                        <input type="file" name="photo" id="upload_photo"   value="<?php echo $photo;?>">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="photo" id="upload_photo" value="<?php echo $photo;?>">
-                    </div>
-                </div>
-            <?php } if(!empty($degree)) {?>
-               <div class="col s8" >
-                    <p> Certificates Of Highest Education(Notarized): <a href="uploads/documents/<?php echo $degree; ?>" target="_blank"> <?php echo $degree;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red" name="delete_degree"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else {?>
-                <div class="file-field input-field col s12">
-                    <div class="btn deep-purple lighten-1">
-                        <span>Certificates Of Highest Education(Notarized)</span>
-                        <input type="file" name="degree">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="degree" value="<?php echo $degree;?>">
-                    </div>
-                </div>
-            <?php }  if(!empty($transcript)) {?>
-               <div class="col s8" >
-                    <p> Transcripts Of Highest Education(Notarized): <a href="uploads/documents/<?php echo $transcript; ?>" target="_blank"> <?php echo $transcript;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_transcript"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else {?>
-                <div class="file-field input-field col s12 ">
-                    <div class="btn deep-purple lighten-1">
-                       <span>Transcripts Of Highest Education(Notarized)</span>
-                        <input type="file" name="transcript">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="transcript" value="<?php echo $transcript;?>">
-                    </div>
-                </div>
-
-            <?php } if(!empty($plan)) {?>
-               <div class="col s8" >
-                    <p> Personal Statement (A brief introduction about you) <a href="uploads/documents/<?php echo $plan; ?>" target="_blank"> <?php echo $plan;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_plan"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else {?> 
-                
-        </div>
-    
-        <div class="row">
-
-                <div class="file-field input-field col s12">
-                    <div class="btn deep-purple lighten-1">
-                        <span>Personal Statement</span>
-                        <input type="file" name="plan" >
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="plan" value="<?php echo $plan;?>">
-                    </div>
-                </div>
-
-            <?php }  if(!empty($refferences)) {?>
-               <div class="col s8" >
-                    <p> Two Recommendation Letters: <a href="uploads/documents/<?php echo $refferences; ?>" target="_blank"> <?php echo $refferences;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_refferences"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else {?>  
-                <div class="file-field input-field col s12">
-                    <div class="btn deep-purple lighten-1">
-                        <span>Two Recommendation Letters</span>
-                        <input type="file" name="refferences" >
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="refferences" value="<?php echo $refferences;?>">
-                    </div>
-                </div>
-
-            <?php } if(!empty($passport)) {?>
-               <div class="col s8" >
-                    <p> Passport Home Page (Page 2): <a href="uploads/documents/<?php echo $passport; ?>" target="_blank"> <?php echo $passport;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_passport"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else {?>   
-                <div class="file-field input-field col s12">
-                    <div class="btn deep-purple lighten-1">
-                        <span>Passport Home Page (Page 2)</span>
-                        <input type="file" name="passport" >
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="passport" value="<?php echo $passport;?>">
-                    </div>
-                </div>
-            <?php }  ?>
-
-        </div>
-     
-        <div class="row">
-        <?php  if(!empty($tests)) {?>
-               <div class="col s8" >
-                    <p> Physical Examination Record for Foreinger: <a href="uploads/documents/<?php echo $tests; ?>" target="_blank"> <?php echo $tests;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_tests"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else { ?> 
-
-            <div class="file-field input-field col s12">
-                        <div class="btn deep-purple lighten-1">
-                            <span>Physical Examination Record for Foreinger</span>
-                            <input type="file" name="tests">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" name="tests" value="<?php echo $tests;?>">
-                        </div>
-                    </div>
-
-            <?php }
-              if(!empty($cv)) {?>
+        <!-- Supporting Documents -->
+            <div class="row">
+                <?php if(!empty($photo)) {?>
                 <div class="col s8" >
-                     <p> Curriculum Vitae (CV): <a href="uploads/documents/<?php echo $cv; ?>" target="_blank"> <?php echo $cv;?> </a>
-                     <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_cv"><i class="material-icons">delete</i></button>
-                      </p>
+                        <p> Passport / Visa Style Photo: <a href="uploads/documents/<?php echo htmlspecialchars($photo); ?>" target="_blank"> <?php echo htmlspecialchars($photo);?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red" type="submit" name="delete_photo"><i class="material-icons">delete</i></button>
+                        </p>
                 </div>
-             <?php } else { ?> 
- 
-             <div class="file-field input-field col s12">
-                         <div class="btn deep-purple lighten-1">
-                             <span>Curriculum Vitae (CV)</span>
-                             <input type="file" name="cv" >
-                         </div>
-                         <div class="file-path-wrapper">
-                             <input class="file-path validate" type="text" name="cv" value="<?php echo $cv;?>">
-                         </div>
-                     </div>
- 
-             <?php }
-            
-            if(!empty($papers)) {?>
-               <div class="col s8" >
-                    <p> Papers or Articles Published or tobe Published: <a href="uploads/documents/<?php echo $papers; ?>" target="_blank"> <?php echo $papers;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_papers"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else { ?> 
-            <div class="file-field input-field col s12">
+                
+                <?php } else {?>
+                    <div class="file-field input-field col s12">
                         <div class="btn deep-purple lighten-1">
-                            <span>Papers or Articles Published or tobe Published</span>
-                            <input type="file" name="papers">
+                            <span>Passport / Visa Style Photo</span>
+                            <input type="file" name="photo" id="upload_photo"   value="<?php echo htmlspecialchars($photo);?>">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" name="papers" value="<?php echo $papers;?>">
+                            <input class="file-path validate" type="text" name="photo" id="upload_photo" value="<?php echo htmlspecialchars($photo);?>">
                         </div>
                     </div>
-                    <?php } ?>
-        
-        </div>
-          
-
-        <div class="row">
-
-        <?php  if(!empty($art)) {?>
-               <div class="col s8" >
-                    <p> Example Of Art(6 color pictures) And Music Work (1 CD): <a href="uploads/documents/<?php echo $art; ?>" target="_blank"> <?php echo $art;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_art"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else { ?> 
-
-         <div class="file-field input-field col s12">
+                <?php } if(!empty($degree)) {?>
+                <div class="col s8" >
+                        <p> Certificates Of Highest Education(Notarized): <a href="uploads/documents/<?php echo htmlspecialchars($degree); ?>" target="_blank"> <?php echo htmlspecialchars($degree);?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red" name="delete_degree"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else {?>
+                    <div class="file-field input-field col s12">
                         <div class="btn deep-purple lighten-1">
-                            <span>Example Of Art(6 color pictures) And Music Work (1 CD)</span>
-                            <input type="file" name="art" >
+                            <span>Certificates Of Highest Education(Notarized)</span>
+                            <input type="file" name="degree">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" name="art" value="<?php echo $art;?>">
+                            <input class="file-path validate" type="text" name="degree" value="<?php echo htmlspecialchars($degree);?>">
                         </div>
                     </div>
-            <?php }  if(!empty($other)) {?>
-               <div class="col s8" >
-                    <p> Other Supporting Documents: <a href="uploads/documents/<?php echo $other; ?>" target="_blank"> <?php echo $other;?> </a>
-                    <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_other"><i class="material-icons">delete</i></button>
-                     </p>
-               </div>
-            <?php } else { ?> 
-
-            <div class="file-field input-field col s12">
+                <?php }  if(!empty($transcript)) {?>
+                <div class="col s8" >
+                        <p> Transcripts Of Highest Education(Notarized): <a href="uploads/documents/<?php echo htmlspecialchars($transcript); ?>" target="_blank"> <?php echo htmlspecialchars($transcript);?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_transcript"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else {?>
+                    <div class="file-field input-field col s12 ">
                         <div class="btn deep-purple lighten-1">
-                            <span>Other Supporting Documents</span>
-                            <input type="file" name="other" >
+                        <span>Transcripts Of Highest Education(Notarized)</span>
+                            <input type="file" name="transcript">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" name="other" value="<?php echo $other;?>">
+                            <input class="file-path validate" type="text" name="transcript" value="<?php echo htmlspecialchars($transcript);?>">
                         </div>
                     </div>
-            <?php } if(empty($photo) || empty($passport) || empty($degree) || empty($transcript) || empty($plan)
-            || empty($refferences) || empty($tests) || empty($art) || empty($other) || empty($papers)
-            || empty($cv)){ ?>
-         
 
-            <div class="input-field col s12">
-                <button class="btn waves-effect waves-light deep-purple lighten-1" type="submit" name="update">Save Changes
-                <i class="material-icons right">check</i>
-                </button>
+                <?php } if(!empty($plan)) {?>
+                <div class="col s8" >
+                        <p> Personal Statement (A brief introduction about you) <a href="uploads/documents/<?php echo htmlspecialchars($plan); ?>" target="_blank"> <?php echo htmlspecialchars($plan);?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_plan"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else {?>      
             </div>
+            <div class="row">
+                    <div class="file-field input-field col s12">
+                        <div class="btn deep-purple lighten-1">
+                            <span>Personal Statement</span>
+                            <input type="file" name="plan" >
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" name="plan" value="<?php echo $plan;?>">
+                        </div>
+                    </div>
 
-            <?php } ?>
-        </div>
-      <!-- /. Supporting Documents -->
-  
+                <?php }  if(!empty($refferences)) {?>
+                <div class="col s8" >
+                        <p> Two Recommendation Letters: <a href="uploads/documents/<?php echo $refferences; ?>" target="_blank"> <?php echo $refferences;?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_refferences"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else {?>  
+                    <div class="file-field input-field col s12">
+                        <div class="btn deep-purple lighten-1">
+                            <span>Two Recommendation Letters</span>
+                            <input type="file" name="refferences" >
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" name="refferences" value="<?php echo $refferences;?>">
+                        </div>
+                    </div>
 
+                <?php } if(!empty($passport)) {?>
+                <div class="col s8" >
+                        <p> Passport Home Page (Page 2): <a href="uploads/documents/<?php echo $passport; ?>" target="_blank"> <?php echo $passport;?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_passport"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else {?>   
+                    <div class="file-field input-field col s12">
+                        <div class="btn deep-purple lighten-1">
+                            <span>Passport Home Page (Page 2)</span>
+                            <input type="file" name="passport" >
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" name="passport" value="<?php echo $passport;?>">
+                        </div>
+                    </div>
+                <?php }  ?>
+            </div>
+        
+            <div class="row">
+            <?php  if(!empty($tests)) {?>
+                <div class="col s8" >
+                        <p> Physical Examination Record for Foreigner: <a href="uploads/documents/<?php echo $tests; ?>" target="_blank"> <?php echo $tests;?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_tests"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else { ?> 
+
+                <div class="file-field input-field col s12">
+                            <div class="btn deep-purple lighten-1">
+                                <span>Physical Examination Record for Foreigner</span>
+                                <input type="file" name="tests">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" name="tests" value="<?php echo $tests;?>">
+                            </div>
+                        </div>
+
+                <?php }
+                if(!empty($cv)) {?>
+                    <div class="col s8" >
+                        <p> Curriculum Vitae (CV): <a href="uploads/documents/<?php echo $cv; ?>" target="_blank"> <?php echo $cv;?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_cv"><i class="material-icons">delete</i></button>
+                        </p>
+                    </div>
+                <?php } else { ?> 
     
-      </div>
+                <div class="file-field input-field col s12">
+                    <div class="btn deep-purple lighten-1">
+                        <span>Curriculum Vitae (CV)</span>
+                        <input type="file" name="cv" >
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" name="cv" value="<?php echo $cv;?>">
+                    </div>
+                </div>
 
+                <?php } 
+                if(!empty($papers)) {?>
+                <div class="col s8" >
+                        <p> Papers or Articles Published or to be Published: <a href="uploads/documents/<?php echo $papers; ?>" target="_blank"> <?php echo $papers;?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_papers"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else { ?> 
+                <div class="file-field input-field col s12">
+                    <div class="btn deep-purple lighten-1">
+                        <span>Papers or Articles Published or to be Published</span>
+                        <input type="file" name="papers">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" name="papers" value="<?php echo $papers;?>">
+                    </div>
+                </div>
+                 <?php } ?>
+                </div>
+            
+               <div class="row">
+                <?php  if(!empty($art)) {?>
+                <div class="col s8" >
+                        <p> Example Of Art(6 color pictures) And Music Work (1 CD): <a href="uploads/documents/<?php echo $art; ?>" target="_blank"> <?php echo $art;?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_art"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else { ?> 
+
+                <div class="file-field input-field col s12">
+                    <div class="btn deep-purple lighten-1">
+                        <span>Example Of Art(6 color pictures) And Music Work (1 CD)</span>
+                        <input type="file" name="art" >
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" name="art" value="<?php echo $art;?>">
+                    </div>
+                </div>
+                <?php }  if(!empty($other)) {?>
+                <div class="col s8" >
+                        <p> Other Supporting Documents: <a href="uploads/documents/<?php echo $other; ?>" target="_blank"> <?php echo $other;?> </a>
+                        <button class="btn-floating btn-large waves-effect waves-light red"  name="delete_other"><i class="material-icons">delete</i></button>
+                        </p>
+                </div>
+                <?php } else { ?> 
+
+                <div class="file-field input-field col s12">
+                    <div class="btn deep-purple lighten-1">
+                        <span>Other Supporting Documents</span>
+                        <input type="file" name="other" >
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" name="other" value="<?php echo $other;?>">
+                    </div>
+                </div>
+
+                <?php } 
+                
+                if(empty($photo) || empty($passport) || empty($degree) || empty($transcript) || empty($plan) || empty($refferences) || empty($tests) || empty($art) || empty($other) || empty($papers) || empty($cv)){ ?>
+                <div class="input-field col s12">
+                    <button class="btn waves-effect waves-light deep-purple lighten-1" type="submit" name="update">Save Changes
+                    <i class="material-icons right">check</i>
+                    </button>
+                </div>
+                <?php } ?>
+            </div>
+        <!-- /. Supporting Documents -->  
+        </div>
     </form>
     <?php
     if(isset($_POST["update"])){
@@ -273,7 +248,6 @@ $cv = $row_customer["cv"];
       $update_id = $id;
 
       //Get all posted files
-
       $photo = $_FILES["photo"];
       $passport = $_FILES["passport"];
       $degree = $_FILES["degree"];
@@ -286,7 +260,7 @@ $cv = $row_customer["cv"];
       $other = $_FILES["other"];
       $cv = $_FILES["cv"];
 
-      //prevent empty form submisions erasing already uploaded files
+      //prevent empty form submissions erasing already uploaded files
       if(isset($_FILES["photo"]) && $_FILES["photo"]["name"] != "" ){
 
          //get file extension
@@ -396,7 +370,6 @@ $cv = $row_customer["cv"];
           $cvname = $row_customer["cv"];
       }
       
-
       $temp_name1 = $photo["tmp_name"];
       $temp_name2 = $passport["tmp_name"];
       $temp_name3 = $degree["tmp_name"];
@@ -420,8 +393,6 @@ $cv = $row_customer["cv"];
       move_uploaded_file($temp_name9, 'uploads/documents/'.$papersname);
       move_uploaded_file($temp_name10, 'uploads/documents/'.$othername);
       move_uploaded_file($temp_name11, 'uploads/documents/'.$cvname);
-     
-
 
        //Update applicant documents
         $query = "UPDATE documents SET 
@@ -453,37 +424,29 @@ $cv = $row_customer["cv"];
           ":update_id" =>  htmlspecialchars(strip_tags($update_id))
          );
 
-        //Sanitize the data
         $stmt = $conn->prepare($query);
-
-        //Save all details to the DB
         if($stmt->execute($updateData)){
-
           echo "<script>alert('Your information have been updated successfully'); </script>";
           echo "<script>window.open('apply.php?documents','_self')</script>";
         }
 
     }
 
-    //one by deletion of uploaded files
+    //one by one deletion of uploaded files
     if(isset($_POST["delete_photo"])){
 
-
-
-         //Update applicant documents
+         //Update applicants photo
          $query = "UPDATE documents SET 
          photo = :photo
          WHERE email = :email";
- 
           $updateData = array(
           ":photo" =>  "",
            ":email" =>  htmlspecialchars(strip_tags($email))
           );
- 
-         //Sanitize the data
+
          $stmt = $conn->prepare($query);
  
-         //Save all details to the DB
+         //Update to the DB
          if($stmt->execute($updateData)){
 
            // remove file from server
@@ -497,7 +460,7 @@ $cv = $row_customer["cv"];
     }
     if(isset($_POST["delete_degree"])){
 
-         //Update applicant documents
+         //Update applicant degrees
          $query = "UPDATE documents SET 
          degree = :degree
          WHERE email = :email";
@@ -506,25 +469,19 @@ $cv = $row_customer["cv"];
           ":degree" =>  "",
            ":email" =>  htmlspecialchars(strip_tags($email))
           );
- 
-         //Sanitize the data
-         $stmt = $conn->prepare($query);
- 
-         //Save all details to the DB
-         if($stmt->execute($updateData)){
 
-            // remove file from server
-            unlink("uploads/documents/".$degree);
- 
+         $stmt = $conn->prepare($query);
+         //Update to the DB
+         if($stmt->execute($updateData)){
+           //remove file from server
+           unlink("uploads/documents/".$degree);
            echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
            echo "<script>window.open('apply.php?documents','_self')</script>";
          }
-
-
     }
-    if(isset($_POST["delete_transcript"])){
 
-         //Update applicant documents
+    if(isset($_POST["delete_transcript"])){
+         //Update applicant transcript
          $query = "UPDATE documents SET 
          transcript = :transcript
          WHERE email = :email";
@@ -533,16 +490,12 @@ $cv = $row_customer["cv"];
           ":transcript" =>  "",
            ":email" =>  htmlspecialchars(strip_tags($email))
           );
- 
-         //Sanitize the data
          $stmt = $conn->prepare($query);
  
-         //Save all details to the DB
+         //update the DB
          if($stmt->execute($updateData)){
-
-             // remove file from server
+           // remove file from server
            unlink("uploads/documents/".$transcript);
- 
            echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
            echo "<script>window.open('apply.php?documents','_self')</script>";
          }
@@ -551,7 +504,7 @@ $cv = $row_customer["cv"];
     }
     if(isset($_POST["delete_plan"])){
 
-        //Update applicant documents
+        //Update applicant study plan
         $query = "UPDATE documents SET 
         study_plan = :plan
         WHERE email = :email";
@@ -561,25 +514,20 @@ $cv = $row_customer["cv"];
           ":email" =>  htmlspecialchars(strip_tags($email))
          );
 
-        //Sanitize the data
         $stmt = $conn->prepare($query);
-
-        //Save all details to the DB
+        //Update to the DB
         if($stmt->execute($updateData)){
 
-             // remove file from server
-           unlink("uploads/documents/".$plan);
-
+          // remove file from server
+          unlink("uploads/documents/".$plan);
           echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
           echo "<script>window.open('apply.php?documents','_self')</script>";
         }
-
-
    }
 
    if(isset($_POST["delete_refferences"])){
 
-    //Update applicant documents
+    //Update applicant refs
     $query = "UPDATE documents SET 
     refferences = :refferences
     WHERE email = :email";
@@ -589,25 +537,18 @@ $cv = $row_customer["cv"];
       ":email" =>  htmlspecialchars(strip_tags($email))
      );
 
-    //Sanitize the data
     $stmt = $conn->prepare($query);
-
-    //Save all details to the DB
-    if($stmt->execute($updateData)){
-
-
-         // remove file from server
-         unlink("uploads/documents/".$refferences);
-
+    //Update to the DB
+    if($stmt->execute($updateData)){   
+      // remove file from server
+      unlink("uploads/documents/".$refferences);
       echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
       echo "<script>window.open('apply.php?documents','_self')</script>";
     }
+   }
 
-
-}
    if(isset($_POST["delete_passport"])){
-
-    //Update applicant documents
+    //Update applicant passport
     $query = "UPDATE documents SET 
     passport = :passport
     WHERE email = :email";
@@ -617,13 +558,11 @@ $cv = $row_customer["cv"];
       ":email" =>  htmlspecialchars(strip_tags($email))
      );
 
-    //Sanitize the data
     $stmt = $conn->prepare($query);
-
-    //Save all details to the DB
+    //Update to the DB
     if($stmt->execute($updateData)){
-         // remove file from server
-         unlink("uploads/documents/".$passport);
+      // remove file from server
+      unlink("uploads/documents/".$passport);
 
       echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
       echo "<script>window.open('apply.php?documents','_self')</script>";
@@ -632,8 +571,7 @@ $cv = $row_customer["cv"];
 
 }
    if(isset($_POST["delete_tests"])){
-
-    //Update applicant documents
+    //Update applicant medical tests
     $query = "UPDATE documents SET 
     tests = :tests
     WHERE email = :email";
@@ -643,24 +581,19 @@ $cv = $row_customer["cv"];
       ":email" =>  htmlspecialchars(strip_tags($email))
      );
 
-    //Sanitize the data
     $stmt = $conn->prepare($query);
-
-    //Save all details to the DB
+    //Update to the DB
     if($stmt->execute($updateData)){
-
-         // remove file from server
-         unlink("uploads/documents/".$tests);
+      // remove file from server
+      unlink("uploads/documents/".$tests);
 
       echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
       echo "<script>window.open('apply.php?documents','_self')</script>";
     }
+ }
 
-
-}
    if(isset($_POST["delete_cv"])){
-
-    //Update applicant documents
+    //Update applicant cv
     $query = "UPDATE documents SET 
     cv = :cv
     WHERE email = :email";
@@ -670,24 +603,19 @@ $cv = $row_customer["cv"];
       ":email" =>  htmlspecialchars(strip_tags($email))
      );
 
-    //Sanitize the data
     $stmt = $conn->prepare($query);
-
-    //Save all details to the DB
+    //Update to the DB
     if($stmt->execute($updateData)){
-
-         // remove file from server
-         unlink("uploads/documents/".$cv);
+      // remove file from server
+      unlink("uploads/documents/".$cv);
 
       echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
       echo "<script>window.open('apply.php?documents','_self')</script>";
     }
-
-
-}
+ }
    if(isset($_POST["delete_papers"])){
 
-    //Update applicant documents
+    //Update applicant authored papers
     $query = "UPDATE documents SET 
     papers_published = :papers_published
     WHERE email = :email";
@@ -697,23 +625,20 @@ $cv = $row_customer["cv"];
       ":email" =>  htmlspecialchars(strip_tags($email))
      );
 
-    //Sanitize the data
     $stmt = $conn->prepare($query);
-
-    //Save all details to the DB
+    //Update to the DB
     if($stmt->execute($updateData)){
-         // remove file from server
-         unlink("uploads/documents/".$papers);
+      // remove file from server
+      unlink("uploads/documents/".$papers);
 
       echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
       echo "<script>window.open('apply.php?documents','_self')</script>";
     }
+ }
 
-
-}
    if(isset($_POST["delete_art"])){
 
-    //Update applicant documents
+    //Update applicant artistic documents
     $query = "UPDATE documents SET 
     art = :art
     WHERE email = :email";
@@ -722,25 +647,21 @@ $cv = $row_customer["cv"];
      ":art" =>  "",
       ":email" =>  htmlspecialchars(strip_tags($email))
      );
-
-    //Sanitize the data
     $stmt = $conn->prepare($query);
-
-    //Save all details to the DB
+    //Update to the DB
     if($stmt->execute($updateData)){
-
-         // remove file from server
-         unlink("uploads/documents/".$art);
+      // remove file from server
+      unlink("uploads/documents/".$art);
 
       echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
       echo "<script>window.open('apply.php?documents','_self')</script>";
     }
 
-
 }
+
    if(isset($_POST["delete_other"])){
 
-    //Update applicant documents
+    //Update applicant other documents
     $query = "UPDATE documents SET 
     other = :other
     WHERE email = :email";
@@ -749,23 +670,17 @@ $cv = $row_customer["cv"];
      ":other" =>  "",
       ":email" =>  htmlspecialchars(strip_tags($email))
      );
-
-    //Sanitize the data
     $stmt = $conn->prepare($query);
-
-    //Save all details to the DB
+    //Update to the DB
     if($stmt->execute($updateData)){
 
-         // remove file from server
-         unlink("uploads/documents/".$other);
+      // remove file from server
+      unlink("uploads/documents/".$other);
 
       echo "<script>alert('Your file was deleted, please re-upload it.'); </script>";
       echo "<script>window.open('apply.php?documents','_self')</script>";
-    }
+     }
+ }
 
-
-}
-
-    ?>
-
+?>
 </center>

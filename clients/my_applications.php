@@ -1,7 +1,6 @@
 <center>
     <h5>My Applications</h5>
     <p>Your applications in one place</p>
-   
      <form action="#">
             <table class="highlight centered responsive-table">
                 <thead>
@@ -15,33 +14,31 @@
                     <th>Status</th>
                     <th>Payment</th>
                     <th>Confirm</th>
-                    <th>Delete</th>
-                   
+                    <th>Delete</th>   
                 </tr>
                 </thead>
-
                 <tbody>
-                <?php
-                $email = $_SESSION["customer_session"];
-                
-                //Get all current user applications
-                $query = "SELECT *  FROM applications WHERE email = '$email'";
-                $stmt = $conn->prepare($query);
-                //Execute query
-                $stmt->execute(); 
-                $result = $stmt->fetchAll();
-                $i =0;
-                foreach($result as $row){
-                
-                    $i++;
+                    <?php
+                    $email = $_SESSION["customer_session"];
+                    
+                    //Get all current user applications
+                    $query = "SELECT *  FROM applications WHERE email = '$email'";
+                    $stmt = $conn->prepare($query);
+                    //Execute query
+                    $stmt->execute(); 
+                    $result = $stmt->fetchAll();
+                    $i =0;
+                    foreach($result as $row){
+                    
+                        $i++;
 
-                    if($row["payment"] == "Pending"){
+                        if($row["payment"] == "Pending"){
 
-                        $payment_status = "Unpaid";
-                    } else {
-                        $payment_status = "Paid";
-                    }
-                ?>
+                            $payment_status = "Unpaid";
+                        } else {
+                            $payment_status = "Paid";
+                        }
+                    ?>
                 <tr>
                     <td><?php echo $row["id"]; ?></td>
                     <td><?php echo $row["level"]; ?></td>
