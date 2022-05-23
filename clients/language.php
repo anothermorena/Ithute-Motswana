@@ -1,37 +1,33 @@
 <?php
+$customerEmail = array(
+    ":email" =>  $_SESSION["customer_session"]
+    );
 
-$email = $_SESSION["customer_session"];
-
-//Get customer personal information
-$query = "SELECT *  FROM languages WHERE email = '$email'";
+//Get customer language proficiency information
+$query = "SELECT *  FROM languages WHERE email = :email";
 $stmt = $conn->prepare($query);
-//Execute query
-$stmt->execute(); 
-//Return results as an array 
-$row_customer = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt->execute($customerEmail); 
+$row_customer_lan_prof = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$id = $row_customer["id"];
-$chinese = $row_customer["chinese"];
-$english = $row_customer["english"];
-$hsk_cert = $row_customer["hsk_cert"];
-$eng_cert = $row_customer["eng_cert"];
-$work = $row_customer["work"];
-$school = $row_customer["school"];
+$id = $row_customer_lan_prof["id"];
+$chinese = $row_customer_lan_prof["chinese"];
+$english = $row_customer_lan_prof["english"];
+$hsk_cert = $row_customer_lan_prof["hsk_cert"];
+$eng_cert = $row_customer_lan_prof["eng_cert"];
+$work = $row_customer_lan_prof["work"];
+$school = $row_customer_lan_prof["school"];
 
 ?>
-
 <center>
     <h5>Language Proficiency</h5>
     <p>How is your English and Chinese? </p>
-
     <form method="POST" action="" enctype="multipart/form-data">
-
         <div class="row">
             <!-- Chinese Proficiency -->
             <div class="row">
                 <div class="input-field col s12 m4">
                     <select name="chinese" required>
-                        <option value="<?php echo $chinese;?>"><?php echo $chinese;?></option>
+                        <option value="<?php echo $chinese;?>"><?php echo htmlspecialchars($chinese);?></option>
                         <option value="Bad">Bad</option>
                         <option value="Good">Good</option>
                         <option value="Excellent">Excellent</option>
@@ -46,7 +42,7 @@ $school = $row_customer["school"];
                         <input type="file" name="hsk_cert">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="hsk_cert" value="<?php echo $hsk_cert;?>">
+                        <input class="file-path validate" type="text" name="hsk_cert" value="<?php echo htmlspecialchars($hsk_cert);?>">
                     </div>
                 </div>
 
@@ -57,7 +53,7 @@ $school = $row_customer["school"];
             <div class="row">
                 <div class="input-field col s12 m4">
                     <select name="english" required>
-                        <option value="<?php echo $english;?>"><?php echo $english;?></option>
+                        <option value="<?php echo $english;?>"><?php echo htmlspecialchars($english);?></option>
                         <option value="Bad">Bad</option>
                         <option value="Good">Good</option>
                         <option value="Excellent">Excellent</option>
@@ -72,17 +68,18 @@ $school = $row_customer["school"];
                         <input type="file" name="eng_cert">
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" name="eng_cert" value="<?php echo $eng_cert;?>">
+                        <input class="file-path validate" type="text" name="eng_cert" value="<?php echo htmlspecialchars($eng_cert);?>">
                     </div>
                 </div>
 
             </div>
             <!-- /. English Proficiency -->
+
             <!-- Work And School -->
             <div class="row">
                 <div class="input-field col s12 m4">
                     <select name="work" required>
-                        <option value="<?php echo $work;?>"><?php echo $work;?></option>
+                        <option value="<?php echo $work;?>"><?php echo htmlspecialchars($work);?></option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
@@ -90,7 +87,7 @@ $school = $row_customer["school"];
                 </div>
                 <div class="input-field col s12 m4">
                     <select name="school" required>
-                        <option value="<?php echo $school;?>"><?php echo $school;?></option>
+                        <option value="<?php echo $school;?>"><?php echo htmlspecialchars($school);?></option>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                     </select>
@@ -98,19 +95,13 @@ $school = $row_customer["school"];
                 </div>
 
                 <div class="input-field col s12 m4">
-                    <button class="btn waves-effect waves-light deep-purple lighten-1" type="submit" name="update">Save
-                        Changes
+                    <button class="btn waves-effect waves-light deep-purple lighten-1" type="submit" name="update">Save Changes
                         <i class="material-icons right">check</i>
                     </button>
                 </div>
             </div>
             <!-- /. Work And School-->
-
-
-
-
         </div>
-
     </form>
     <?php
     if(isset($_POST["update"])){
@@ -151,13 +142,10 @@ $school = $row_customer["school"];
       $temp_name1 = $hsk_cert["tmp_name"];
       $temp_name2 = $eng_cert["tmp_name"];    
      
-
       move_uploaded_file($temp_name1, 'uploads/languages/'.$hsk_certname);
       move_uploaded_file($temp_name2, 'uploads/languages/'.$eng_certname);
       
-
-
-       //Update customer account details
+       //Update customer language details
         $query = "UPDATE languages SET 
         chinese = :chinese,
         english = :english,
@@ -177,19 +165,14 @@ $school = $row_customer["school"];
           ":update_id" =>  htmlspecialchars(strip_tags($update_id))
          );
 
-        //Sanitize the data
         $stmt = $conn->prepare($query);
-
-        //Save all details to the DB
+        //Update the DB
         if($stmt->execute($updateData)){
 
           echo "<script>alert('Your information have been updated successfully'); </script>";
           echo "<script>window.open('apply.php?language','_self')</script>";
         }
-
     }
-
-
     ?>
 
 </center>
