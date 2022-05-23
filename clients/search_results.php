@@ -3,10 +3,15 @@
 include("../config/database.php");
 
 if(isset($_POST['major']) && isset($_POST["discipline"])){
+
+    //capture the search details
+    $major = htmlspecialchars($_POST['major']);
+    $discipline = htmlspecialchars($_POST['discipline']);
+
     $output = '';
-    $query = "SELECT * FROM majors WHERE discipline = '".$_POST["discipline"]."' AND major LIKE '%".$_POST['major']."%'";
+    $query = "SELECT * FROM majors WHERE discipline = '".$discipline."' AND major LIKE '%".$major."%'";
     $stmt = $conn->prepare($query);
-    //Execute query
+
     $stmt->execute();
     $output = '<ul class="list-unstyled" style="background-color:#eee;cursor:pointer">';
 
@@ -17,12 +22,10 @@ if(isset($_POST['major']) && isset($_POST["discipline"])){
         }
 
     } else {
-
         $output .= '<li > Major not available!!You should try your other choices maybe?  </li>';
     }
         $output .='</ul>';
         echo $output;
 }
-
 
 ?>
