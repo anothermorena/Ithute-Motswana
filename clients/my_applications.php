@@ -19,35 +19,34 @@
                 </thead>
                 <tbody>
                     <?php
-                    $email = $_SESSION["customer_session"];
+                    $customerEmail = array(
+                        ":email" =>  $_SESSION["customer_session"]
+                        );
                     
                     //Get all current user applications
-                    $query = "SELECT *  FROM applications WHERE email = '$email'";
+                    $query = "SELECT *  FROM applications WHERE email = :email";
                     $stmt = $conn->prepare($query);
                     //Execute query
-                    $stmt->execute(); 
+                    $stmt->execute($customerEmail); 
                     $result = $stmt->fetchAll();
                     $i =0;
                     foreach($result as $row){
-                    
                         $i++;
-
                         if($row["payment"] == "Pending"){
-
                             $payment_status = "Unpaid";
                         } else {
                             $payment_status = "Paid";
                         }
                     ?>
                 <tr>
-                    <td><?php echo $row["id"]; ?></td>
-                    <td><?php echo $row["level"]; ?></td>
-                    <td><?php echo $row["discipline"]; ?></td>
-                    <td><?php echo $row["major"]; ?></td>
-                    <td><?php echo substr($row["date"],0,11); ?></td>
-                    <td><?php echo $row["invoice_no"]; ?></td>
-                    <td><?php echo $row["status"]; ?></td>
-                    <td><?php echo $payment_status;  ?></td>
+                    <td><?php echo htmlspecialchars($row["id"]); ?></td>
+                    <td><?php echo htmlspecialchars($row["level"]); ?></td>
+                    <td><?php echo htmlspecialchars($row["discipline"]); ?></td>
+                    <td><?php echo htmlspecialchars($row["major"]); ?></td>
+                    <td><?php echo htmlspecialchars(substr($row["date"],0,11)); ?></td>
+                    <td><?php echo htmlspecialchars($row["invoice_no"]); ?></td>
+                    <td><?php echo htmlspecialchars($row["status"]); ?></td>
+                    <td><?php echo htmlspecialchars($payment_status);  ?></td>
                     
                  <?php if($payment_status == "Paid"){?>
                  <td> Payment Confirmed </td> 
@@ -64,6 +63,5 @@
         
                 </tbody>
             </table>
-             </form>
-
+        </form>
 </center>
