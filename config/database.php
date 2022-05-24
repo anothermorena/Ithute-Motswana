@@ -1,10 +1,12 @@
 <?php
+//loaad the configuration file
+require_once dirname(__DIR__)."/config.php";
 
-// Database connection parameters
-define("DB_HOST","localhost");
-define("DB_NAME","ithute");
-define("DB_USERNAME","root");
-define("DB_PASSWORD","");
+//Database connection parameters
+define("DB_HOST", $_ENV["DB_HOST"]);
+define("DB_NAME", $_ENV["DB_NAME"]);
+define("DB_USERNAME", $_ENV["DB_USERNAME"]);
+define("DB_PASSWORD", $_ENV["DB_PASSWORD"]);
 
 
 //Establish a database connection

@@ -5,6 +5,13 @@ session_start();
 //thwarts session fixation attacks
 session_regenerate_id();
 
+
+//cross site request forgery protection
+$_SESSION["token"] = bin2hex(random_bytes(32));
+
+//sets the expiry dime for the token
+$_SESSION["token-expire"] = time() + 3600; // 1 hour = 3600 secs
+
 //Database Config
 include("config/database.php");
 

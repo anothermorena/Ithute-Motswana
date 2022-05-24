@@ -7,6 +7,7 @@ include "includes/header.php";
 if(isset($_SESSION["customer_session"])){
   echo "<script> window.open('clients/home.php','_self')</script>";
 }
+
 ?>
 <body>
   <!-- Header -->

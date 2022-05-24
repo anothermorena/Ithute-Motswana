@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <!-- Document Head -->
-<?php include "includes/header.php";?>
+<?php 
+include_once("config.php");
+include_once ("includes/header.php");
+
+?>
 
 <body>
     <!-- Header -->
