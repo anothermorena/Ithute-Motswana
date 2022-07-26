@@ -1,5 +1,5 @@
 <?php
-//loaad the configuration file
+//load the configuration file
 require_once dirname(__DIR__)."/config.php";
 
 //Database connection parameters
@@ -17,6 +17,4 @@ try {
   catch(PDOException $e) {
     echo 'Connection Error: ' . $e->getMessage();
   }
-  
-
   
