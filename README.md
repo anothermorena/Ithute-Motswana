@@ -4,7 +4,7 @@
 
 This was a scholarship application portal. I recruited like-minded Batswana and established an NGO, developed its website and social platforms. We sought to help Batswana get international scholarships. We managed to help several students win fully funded scholarships. Through this initiative, we played our part in transitioning and transforming Botswana's economy from a resource-based to a knowledge-based economy. We believed this initiative could help build our country into a developed country through intellectual capacity, which typically represents a large component of all economic activity in developed countries. It is in the past tense because we had to temporarily halt the service for several reasons, but we shall resume it very soon.
 
-# [Website Link](https://ithute-motswana.000webhostapp.com/)
+# [Website Link](http://ithute-motswana.com/)
 
 # Web-App Mobile Responsiveness Screenshots 1
 ![im-mobile-view-collage-1](https://user-images.githubusercontent.com/20603329/181022000-84d81220-1349-44e6-9007-7c2fa90d3995.png)
